@@ -2,6 +2,7 @@ import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
+import { DirectionalLight } from 'three'
 
 /**
  * Base
@@ -36,8 +37,18 @@ directionalLight.castShadow = true
 
 directionalLight.shadow.mapSize.width = 1024
 directionalLight.shadow.mapSize.height = 1024
+directionalLight.shadow.camera.top = 2
+directionalLight.shadow.camera.right = 2
+directionalLight.shadow.camera.bottom = -2
+directionalLight.shadow.camera.left = -2
+
+directionalLight.shadow.camera.near = 1
+directionalLight.shadow.camera.far = 6
+directionalLight.shadow.radius = 10
 
 const directionalLightCameraHelper = new THREE.CameraHelper(directionalLight.shadow.camera)
+//hide camera helper
+directionalLightCameraHelper.visible = false
 scene.add(directionalLightCameraHelper)
 
 /**
@@ -117,6 +128,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 /* shadows */
 renderer.shadowMap.enabled = true
+renderer.shadowMap.type = THREE.PCFSoftShadowMap
 
 
 
